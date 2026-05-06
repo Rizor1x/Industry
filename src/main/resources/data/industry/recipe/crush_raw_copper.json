@@ -1,0 +1,10 @@
+{
+  "type": "industry:crushing",
+  "input": {
+    "item": "minecraft:raw_copper"
+  },
+  "output": {
+    "id": "industry:copper_dust",
+    "count": 2
+  }
+}

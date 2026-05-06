@@ -1,0 +1,4 @@
+{
+  "textures": { "texture": "industry:block/copper_cable", "particle": "industry:block/copper_cable" },
+  "elements":[ { "from": [5, 11, 5], "to":[11, 16, 11], "faces": { "down": {"uv":[5, 5, 11, 11], "texture": "#texture"}, "up": {"uv":[5, 5, 11, 11], "texture": "#texture"}, "north": {"uv":[5, 0, 11, 5], "texture": "#texture"}, "south": {"uv":[5, 0, 11, 5], "texture": "#texture"}, "west": {"uv":[5, 0, 11, 5], "texture": "#texture"}, "east": {"uv":[5, 0, 11, 5], "texture": "#texture"} } } ]
+}

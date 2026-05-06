@@ -1,0 +1,27 @@
+{
+  "itemGroup.industry.main_tab": "Industry",
+
+  "item.industry.copper_dust": "Copper Dust",
+  "item.industry.lead_ingot": "Lead Ingot",
+  "item.industry.lead_dust": "Lead Dust",
+  "item.industry.lead_plate": "Lead Plate",
+  "item.industry.tin_ingot": "Tin Ingot",
+  "item.industry.tin_dust": "Tin Dust",
+  "item.industry.tin_plate": "Tin Plate",
+  "item.industry.bronze_ingot": "Bronze Ingot",
+  "item.industry.bronze_dust": "Bronze Dust",
+  "item.industry.bronze_plate": "Bronze Plate",
+  "item.industry.steel_ingot": "Steel Ingot",
+  "item.industry.steel_dust": "Steel Dust",
+  "item.industry.steel_plate": "Steel Plate",
+  "item.industry.wrench": "Wrench",
+  "item.industry.battery": "Battery",
+
+  "item.industry.machine_casing": "Machine Casing",
+
+  "block.industry.crusher": "Crusher",
+  "block.industry.coal_generator": "Coal Generator",
+  "block.industry.electric_furnace": "Electric Furnace",
+
+  "block.industry.copper_cable": "Copper Cable"
+}

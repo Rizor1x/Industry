@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "industry:block/coal_generator" },
+    "facing=south": { "model": "industry:block/coal_generator", "y": 180 },
+    "facing=west":  { "model": "industry:block/coal_generator", "y": 270 },
+    "facing=east":  { "model": "industry:block/coal_generator", "y": 90 }
+  }
+}
