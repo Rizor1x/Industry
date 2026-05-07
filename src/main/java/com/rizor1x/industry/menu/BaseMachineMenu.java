@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseMachineMenu extends AbstractContainerMenu {
     public final BaseMachineBlockEntity blockEntity;
@@ -22,7 +23,7 @@ public abstract class BaseMachineMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean clickMenuButton(Player player, int buttonId) {
+    public boolean clickMenuButton(@NotNull Player player, int buttonId) {
         if (buttonId >= 0 && buttonId <= 5) {
             int currentMode = blockEntity.sideConfig[buttonId];
             blockEntity.sideConfig[buttonId] = (currentMode + 1) % 3;

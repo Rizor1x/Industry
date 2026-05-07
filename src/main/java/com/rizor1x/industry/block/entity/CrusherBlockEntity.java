@@ -71,7 +71,7 @@ public class CrusherBlockEntity extends BaseMachineBlockEntity {
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack) {
-        if (slot == 1) return stack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem;
+        if (slot == 1) return stack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
         if (slot == 0) return !(stack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem);
         if (slot == 2) return false;
         return super.canInsertItem(slot, stack);

@@ -191,7 +191,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("Inventory", inventory.serializeNBT(registries));
         tag.putInt("Energy", energy);
@@ -200,7 +200,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("Inventory"));
         energy = tag.getInt("Energy");
@@ -215,14 +215,19 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     // ==========================================
     public void processBatterySlot() {
         ItemStack batteryStack = inventory.getStackInSlot(1);
-        if (batteryStack.isEmpty() || !(batteryStack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem batteryItem)) return;
 
-        int currentBatteryEnergy = batteryItem.getEnergy(batteryStack);
-        int batteryCapacity = batteryItem.getCapacity();
+        // Если предмет пустой или у него нет энергии - отменяем
+        if (batteryStack.isEmpty() || !batteryStack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get())) return;
+        // Если это не энерго-предмет (не реализует наш интерфейс) - отменяем
+        if (!(batteryStack.getItem() instanceof com.rizor1x.industry.item.custom.IEnergyItem energyItem)) return;
 
-        // 1. Если машина умеет ОТДАВАТЬ энергию (Генератор) -> Заряжаем батарейку
+        // Теперь мы 100% уверены, что это правильный предмет!
+        int currentBatteryEnergy = batteryStack.get(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
+        int batteryCapacity = energyItem.getCapacity();
+
+        // Если это Генератор -> ЗАРЯЖАЕМ батарейку/бур
         if (this.canExtractEnergy() && this.energy > 0 && currentBatteryEnergy < batteryCapacity) {
-            int amountToCharge = Math.min(this.energy, Math.min(100, batteryCapacity - currentBatteryEnergy)); // Заряжаем по 100 за тик
+            int amountToCharge = Math.min(this.energy, Math.min(100, batteryCapacity - currentBatteryEnergy));
             if (amountToCharge > 0) {
                 this.energy -= amountToCharge;
                 batteryStack.set(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), currentBatteryEnergy + amountToCharge);
@@ -230,9 +235,9 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
             }
         }
 
-        // 2. Если машина ПРОСИТ энергию (Дробитель, Печь) -> Забираем из батарейки
+        // Если это Дробитель/Печь -> ЗАБИРАЕМ энергию из батарейки/бура
         if (this.canReceiveEnergy() && this.energy < this.maxEnergy && currentBatteryEnergy > 0) {
-            int amountToExtract = Math.min(maxEnergy - energy, Math.min(100, currentBatteryEnergy));
+            int amountToExtract = Math.min(this.maxEnergy - this.energy, Math.min(100, currentBatteryEnergy));
             if (amountToExtract > 0) {
                 this.energy += amountToExtract;
                 batteryStack.set(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), currentBatteryEnergy - amountToExtract);
@@ -242,7 +247,7 @@ public abstract class BaseMachineBlockEntity extends BlockEntity implements Menu
     }
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return Component.translatable("block.industry." + getBlockState().getBlock().getDescriptionId().replace("block.industry.", ""));
     }
 }

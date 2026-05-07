@@ -9,8 +9,9 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public class BatteryItem extends Item {
+public class BatteryItem extends Item implements IEnergyItem {
     private final int capacity;
+
 
     public BatteryItem(Properties properties, int capacity) {
         super(properties.stacksTo(1)); // Батарейки не стакаются!

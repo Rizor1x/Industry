@@ -1,10 +1,8 @@
 package com.rizor1x.industry.registry;
 
-import com.mojang.serialization.Codec;
 import com.rizor1x.industry.Industry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -14,5 +12,9 @@ public class ModDataComponents {
 
     // Это "коробочка", в которой будет храниться энергия предмета (от 0 до Максимума)
     public static final Supplier<DataComponentType<Integer>> ENERGY = DATA_COMPONENTS.register("energy",
-            () -> DataComponentType.<Integer>builder().persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT).build());
+            () -> DataComponentType.<Integer>builder().persistent(com.mojang.serialization.Codec.INT).networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
+
+    // ДОБАВЛЯЕМ НОВЫЙ КОМПОНЕНТ ДЛЯ РЕЖИМА БУРА (true = 3x3, false = 1x1)
+    public static final Supplier<DataComponentType<Boolean>> AREA_MODE = DATA_COMPONENTS.register("area_mode",
+            () -> DataComponentType.<Boolean>builder().persistent(com.mojang.serialization.Codec.BOOL).networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.BOOL).build());
 }

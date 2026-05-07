@@ -6,7 +6,6 @@ import com.rizor1x.industry.registry.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
@@ -16,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class ElectricFurnaceMenu extends BaseMachineMenu {
 
@@ -48,15 +48,16 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
     public int getMaxProgress() { return data.get(3); }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@NotNull Player player) {
+        assert blockEntity.getLevel() != null;
         return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), player, ModBlocks.ELECTRIC_FURNACE.get());
     }
 
     // Shift-клик для электропечи
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
         Slot sourceSlot = this.slots.get(index);
-        if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;
+        if (!sourceSlot.hasItem()) return ItemStack.EMPTY;
 
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
@@ -66,6 +67,7 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
             if (!this.moveItemStackTo(sourceStack, 3, this.slots.size(), true)) return ItemStack.EMPTY;
         } else {
             // Если предмет плавится -> в слот 0
+            assert this.blockEntity.getLevel() != null;
             if (this.blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(sourceStack), this.blockEntity.getLevel()).isPresent()) {
                 if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
             }

@@ -1,8 +1,6 @@
 package com.rizor1x.industry.block.entity;
 
-import com.rizor1x.industry.item.custom.BatteryItem;
 import com.rizor1x.industry.registry.ModBlockEntities;
-import com.rizor1x.industry.registry.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,27 +27,27 @@ public class BatteryBoxBlockEntity extends BaseMachineBlockEntity {
         if (this.level == null || this.level.isClientSide) return;
         boolean isDirty = false;
 
-        // 1. ЗАРЯЖАЕМ батарейку в верхнем слоте (0) ОТ нашего Батбокса
+        // 1. ЗАРЯЖАЕМ предмет в слоте (0) ОТ Батбокса
         ItemStack chargeSlot = inventory.getStackInSlot(0);
-        if (chargeSlot.getItem() instanceof BatteryItem bat) {
-            int batEnergy = bat.getEnergy(chargeSlot);
+        if (chargeSlot.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get()) && chargeSlot.getItem() instanceof com.rizor1x.industry.item.custom.IEnergyItem bat) {
+            int batEnergy = chargeSlot.get(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
             int batCap = bat.getCapacity();
             if (this.energy > 0 && batEnergy < batCap) {
                 int transfer = Math.min(this.energy, Math.min(100, batCap - batEnergy));
                 this.energy -= transfer;
-                chargeSlot.set(ModDataComponents.ENERGY.get(), batEnergy + transfer);
+                chargeSlot.set(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), batEnergy + transfer);
                 isDirty = true;
             }
         }
 
-        // 2. РАЗРЯЖАЕМ батарейку в нижнем слоте (1) В наш Батбокс
+        // 2. РАЗРЯЖАЕМ предмет в слоте (1) В Батбокс
         ItemStack dischargeSlot = inventory.getStackInSlot(1);
-        if (dischargeSlot.getItem() instanceof BatteryItem bat) {
-            int batEnergy = bat.getEnergy(dischargeSlot);
+        if (dischargeSlot.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get()) && dischargeSlot.getItem() instanceof com.rizor1x.industry.item.custom.IEnergyItem bat) {
+            int batEnergy = dischargeSlot.get(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
             if (this.energy < this.maxEnergy && batEnergy > 0) {
                 int transfer = Math.min(this.maxEnergy - this.energy, Math.min(100, batEnergy));
                 this.energy += transfer;
-                dischargeSlot.set(ModDataComponents.ENERGY.get(), batEnergy - transfer);
+                dischargeSlot.set(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), batEnergy - transfer);
                 isDirty = true;
             }
         }
@@ -90,8 +88,9 @@ public class BatteryBoxBlockEntity extends BaseMachineBlockEntity {
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack stack) {
-        return stack.getItem() instanceof BatteryItem; // Разрешаем класть только батарейки
+    public boolean canInsertItem(int slot, @org.jetbrains.annotations.NotNull ItemStack stack) {
+        // Если у предмета есть компонент ENERGY - пускаем его в Батбокс!
+        return stack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
     }
 
     @Override

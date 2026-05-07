@@ -76,7 +76,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity {
     @Override
     public boolean canInsertItem(int slot, ItemStack stack) {
         if (slot == 0) return true; // Во вход можно положить всё, что плавится
-        if (slot == 1) return stack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem;
+        if (slot == 1) return stack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get());
         if (slot == 2) return false; // В слот выхода ничего класть нельзя
         return super.canInsertItem(slot, stack);
     }

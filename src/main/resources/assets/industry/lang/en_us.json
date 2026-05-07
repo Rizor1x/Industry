@@ -14,8 +14,11 @@
   "item.industry.steel_ingot": "Steel Ingot",
   "item.industry.steel_dust": "Steel Dust",
   "item.industry.steel_plate": "Steel Plate",
+
   "item.industry.wrench": "Wrench",
   "item.industry.battery": "Battery",
+  "item.industry.basic_drill": "Basic Drill",
+  "item.industry.diamond_drill": "Diamond Drill",
 
   "item.industry.machine_casing": "Machine Casing",
 

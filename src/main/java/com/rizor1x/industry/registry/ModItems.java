@@ -40,8 +40,28 @@ public class ModItems {
     public static final DeferredItem<Item> MACHINE_CASING = registerBasicItem("machine_casing");
     public static final DeferredItem<Item> WRENCH = ITEMS.registerSimpleItem("wrench", new Item.Properties().stacksTo(1));
 
-    public static final DeferredItem<Item> BATTERY = ITEMS.register("battery", () -> new com.rizor1x.industry.item.custom.BatteryItem(new Item.Properties(), 10000));
+    // Батарейка
+    public static final DeferredItem<Item> BATTERY = ITEMS.register("battery",
+            () -> new com.rizor1x.industry.item.custom.BatteryItem(
+                    new Item.Properties().component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0),
+                    10000));
 
+    // Обычный Бур
+    public static final DeferredItem<Item> BASIC_DRILL = ITEMS.register("basic_drill",
+            () -> new com.rizor1x.industry.item.custom.EnergyDrillItem(
+                    net.minecraft.world.item.Tiers.IRON,
+                    new Item.Properties().attributes(net.minecraft.world.item.PickaxeItem.createAttributes(net.minecraft.world.item.Tiers.IRON, 1.0F, -2.8F))
+                            .component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0),
+                    30000, 50, false));
+
+    // Алмазный Бур (Ему еще добавляем компонент Режима по умолчанию)
+    public static final DeferredItem<Item> DIAMOND_DRILL = ITEMS.register("diamond_drill",
+            () -> new com.rizor1x.industry.item.custom.EnergyDrillItem(
+                    net.minecraft.world.item.Tiers.DIAMOND,
+                    new Item.Properties().attributes(net.minecraft.world.item.PickaxeItem.createAttributes(net.minecraft.world.item.Tiers.DIAMOND, 1.0F, -2.8F))
+                            .component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0)
+                            .component(com.rizor1x.industry.registry.ModDataComponents.AREA_MODE.get(), false),
+                    30000, 80, true));
     // ==========================================
     // ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ
     // ==========================================
