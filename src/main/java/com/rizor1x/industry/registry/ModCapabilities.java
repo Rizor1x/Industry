@@ -1,5 +1,6 @@
 package com.rizor1x.industry.registry;
 
+import com.rizor1x.industry.block.entity.BaseMachineBlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
@@ -10,36 +11,47 @@ public class ModCapabilities {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.CRUSHER_BE.get(),
-                (be, side) -> be.getItemHandler(side)
+                BaseMachineBlockEntity::getItemHandler
         );
 
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.CRUSHER_BE.get(),
-                (be, side) -> be.getEnergyStorage(side)
+                BaseMachineBlockEntity::getEnergyStorage
         );
 
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.COAL_GENERATOR_BE.get(),
-                (be, side) -> be.getItemHandler(side)
+                BaseMachineBlockEntity::getItemHandler
         );
 
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.COAL_GENERATOR_BE.get(),
-                (be, side) -> be.getEnergyStorage(side)
+                BaseMachineBlockEntity::getEnergyStorage
         );
 
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.ELECTRIC_FURNACE_BE.get(),
-                (be, side) -> be.getItemHandler(side)
+                BaseMachineBlockEntity::getItemHandler
         );
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.ELECTRIC_FURNACE_BE.get(),
-                (be, side) -> be.getEnergyStorage(side)
+                BaseMachineBlockEntity::getEnergyStorage
+        );
+
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.BATTERY_BOX_BE.get(),
+                BaseMachineBlockEntity::getItemHandler
+        );
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.BATTERY_BOX_BE.get(),
+                BaseMachineBlockEntity::getEnergyStorage
         );
 
         event.registerBlockEntity(

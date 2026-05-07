@@ -1,6 +1,9 @@
 {
   "values":[
     "industry:crusher",
-    "industry:coal_generator"
+    "industry:electric_furnace",
+    "industry:coal_generator",
+    "industry:copper_cable",
+    "industry:uninsulated_copper_cable"
   ]
 }

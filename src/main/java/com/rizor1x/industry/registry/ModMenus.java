@@ -1,6 +1,7 @@
 package com.rizor1x.industry.registry;
 
 import com.rizor1x.industry.Industry;
+import com.rizor1x.industry.menu.BatteryBoxMenu;
 import com.rizor1x.industry.menu.CrusherMenu;
 import com.rizor1x.industry.menu.ElectricFurnaceMenu;
 import com.rizor1x.industry.menu.GeneratorMenu;
@@ -20,6 +21,9 @@ public class ModMenus {
 
     public static final Supplier<MenuType<GeneratorMenu>> GENERATOR_MENU = MENUS.register("generator_menu",
             () -> IMenuTypeExtension.create(GeneratorMenu::new));
+
+    public static final Supplier<MenuType<BatteryBoxMenu>> BATTERY_BOX_MENU = MENUS.register("battery_box_menu",
+            () -> IMenuTypeExtension.create(BatteryBoxMenu::new));
 
     public static final Supplier<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU = MENUS.register("electric_furnace_menu",
             () -> IMenuTypeExtension.create(ElectricFurnaceMenu::new));

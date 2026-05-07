@@ -1,5 +1,6 @@
 package com.rizor1x.industry;
 
+import com.rizor1x.industry.client.screen.BatteryBoxScreen;
 import com.rizor1x.industry.client.screen.CrusherScreen;
 import com.rizor1x.industry.client.screen.ElectricFurnaceScreen;
 import com.rizor1x.industry.client.screen.GeneratorScreen;
@@ -19,6 +20,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @Mod(value = Industry.MODID, dist = Dist.CLIENT)
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = Industry.MODID, value = Dist.CLIENT)
+@SuppressWarnings("unused")
 public class IndustryClient {
     public IndustryClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
@@ -33,6 +35,7 @@ public class IndustryClient {
         event.register(ModMenus.CRUSHER_MENU.get(), CrusherScreen::new);
         event.register(ModMenus.GENERATOR_MENU.get(), GeneratorScreen::new);
         event.register(ModMenus.ELECTRIC_FURNACE_MENU.get(), ElectricFurnaceScreen::new);
+        event.register(ModMenus.BATTERY_BOX_MENU.get(), BatteryBoxScreen::new);
     }
 
     @SubscribeEvent

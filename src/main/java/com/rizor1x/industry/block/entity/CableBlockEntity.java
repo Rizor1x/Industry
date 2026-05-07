@@ -1,6 +1,5 @@
 package com.rizor1x.industry.block.entity;
 
-import com.rizor1x.industry.block.custom.CableTier;
 import com.rizor1x.industry.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import org.jetbrains.annotations.NotNull;
 
 public class CableBlockEntity extends BlockEntity {
 
@@ -57,8 +57,10 @@ public class CableBlockEntity extends BlockEntity {
 
         // Если кабель ОГОЛЕННЫЙ и по нему течет энергия -> бьем током!
         if (!isInsulated && this.energy > 10) {
-            // Ищем всех живых существ прямо в блоке кабеля
-            var entities = level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, new net.minecraft.world.phys.AABB(getBlockPos()));
+            // Расширяем хитбокс удара током (inflate)
+            var dangerZone = new net.minecraft.world.phys.AABB(getBlockPos()).inflate(0.2D);
+            var entities = level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, dangerZone);
+
             for (var entity : entities) {
                 // Бьем молнией на 1 сердечко (2.0f)
                 entity.hurt(level.damageSources().lightningBolt(), 2.0f);
@@ -100,13 +102,13 @@ public class CableBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt("Energy", energy);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.loadAdditional(tag, registries);
         energy = tag.getInt("Energy");
     }

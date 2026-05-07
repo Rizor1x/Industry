@@ -21,6 +21,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class CableBlock extends Block implements EntityBlock, SimpleWaterloggedB
 
     // Собираем форму провода из кусочков в зависимости от подключений
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         VoxelShape shape = CORE;
         if (state.getValue(UP)) shape = Shapes.or(shape, UP_ARM);
         if (state.getValue(DOWN)) shape = Shapes.or(shape, DOWN_ARM);
@@ -70,7 +71,7 @@ public class CableBlock extends Block implements EntityBlock, SimpleWaterloggedB
 
     // Обновляем форму провода, если рядом поставили/сломали машину
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
         if (level instanceof Level realLevel) {
             boolean canConnect = canConnectTo(realLevel, currentPos, direction);
             return state.setValue(PROPERTY_BY_DIRECTION.get(direction), canConnect);
@@ -114,16 +115,21 @@ public class CableBlock extends Block implements EntityBlock, SimpleWaterloggedB
         return tier;
     }
 
+    @Override
+    public java.util.@NotNull List<net.minecraft.world.item.ItemStack> getDrops(@NotNull BlockState state, net.minecraft.world.level.storage.loot.LootParams.@NotNull Builder params) {
+        return java.util.Collections.singletonList(new net.minecraft.world.item.ItemStack(this));
+    }
+
     // Передаем тир в BlockEntity
     @javax.annotation.Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new CableBlockEntity(pos, state);
     }
 
     @javax.annotation.Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         if (level.isClientSide) return null;
         return (lvl, pos, st, be) -> { if (be instanceof CableBlockEntity cable) cable.tick(); };
     }

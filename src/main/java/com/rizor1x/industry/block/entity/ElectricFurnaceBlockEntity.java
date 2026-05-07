@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity {
 
     @Override
     public void tick() {
+        if (this.level == null || this.level.isClientSide) return;
         this.autoIo();
         processBatterySlot();
         boolean isDirty = false;
@@ -74,13 +76,13 @@ public class ElectricFurnaceBlockEntity extends BaseMachineBlockEntity {
     @Override
     public boolean canInsertItem(int slot, ItemStack stack) {
         if (slot == 0) return true; // Во вход можно положить всё, что плавится
-        if (slot == 1) return false; // В слот батареи пока ничего не принимаем
+        if (slot == 1) return stack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem;
         if (slot == 2) return false; // В слот выхода ничего класть нельзя
         return super.canInsertItem(slot, stack);
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player) {
         return new com.rizor1x.industry.menu.ElectricFurnaceMenu(containerId, playerInventory, this, this.data);
     }
 }

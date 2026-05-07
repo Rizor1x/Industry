@@ -22,6 +22,7 @@
   "block.industry.crusher": "Crusher",
   "block.industry.coal_generator": "Coal Generator",
   "block.industry.electric_furnace": "Electric Furnace",
+  "block.industry.battery_box": "Battery Box",
 
   "block.industry.copper_cable": "Copper Cable"
 }

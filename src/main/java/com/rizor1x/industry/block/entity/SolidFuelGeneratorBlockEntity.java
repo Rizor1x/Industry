@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import org.jetbrains.annotations.NotNull;
 
 public class SolidFuelGeneratorBlockEntity extends BaseMachineBlockEntity {
 
@@ -26,6 +27,7 @@ public class SolidFuelGeneratorBlockEntity extends BaseMachineBlockEntity {
 
     @Override
     public void tick() {
+        if (this.level == null || this.level.isClientSide) return;
         processBatterySlot();
         boolean isDirty = false;
 
@@ -80,11 +82,12 @@ public class SolidFuelGeneratorBlockEntity extends BaseMachineBlockEntity {
     @Override
     public boolean canInsertItem(int slot, ItemStack stack) {
         if (slot == 0) return stack.getBurnTime(RecipeType.SMELTING) > 0;
+        if (slot == 1) return stack.getItem() instanceof com.rizor1x.industry.item.custom.BatteryItem;
         return false;
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory playerInventory, @NotNull Player player) {
         return new com.rizor1x.industry.menu.GeneratorMenu(containerId, playerInventory, this, this.data);
     }
 

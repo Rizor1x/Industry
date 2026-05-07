@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "industry:block/battery_box" },
+    "facing=south": { "model": "industry:block/battery_box", "y": 180 },
+    "facing=west":  { "model": "industry:block/battery_box", "y": 270 },
+    "facing=east":  { "model": "industry:block/battery_box", "y": 90 }
+  }
+}
