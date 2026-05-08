@@ -1,11 +1,11 @@
 {
   "multipart":[
-    { "apply": { "model": "industry:block/cable_core" } },
-    { "when": { "up": "true" }, "apply": { "model": "industry:block/cable_arm" } },
-    { "when": { "down": "true" }, "apply": { "model": "industry:block/cable_arm", "x": 180 } },
-    { "when": { "north": "true" }, "apply": { "model": "industry:block/cable_arm", "x": 90 } },
-    { "when": { "south": "true" }, "apply": { "model": "industry:block/cable_arm", "x": 90, "y": 180 } },
-    { "when": { "west": "true" }, "apply": { "model": "industry:block/cable_arm", "x": 90, "y": 270 } },
-    { "when": { "east": "true" }, "apply": { "model": "industry:block/cable_arm", "x": 90, "y": 90 } }
+    { "apply": { "model": "industry:block/copper_cable_core" } },
+    { "when": { "up": "true" }, "apply": { "model": "industry:block/copper_cable_arm" } },
+    { "when": { "down": "true" }, "apply": { "model": "industry:block/copper_cable_arm", "x": 180 } },
+    { "when": { "north": "true" }, "apply": { "model": "industry:block/copper_cable_arm", "x": 90 } },
+    { "when": { "south": "true" }, "apply": { "model": "industry:block/copper_cable_arm", "x": 90, "y": 180 } },
+    { "when": { "west": "true" }, "apply": { "model": "industry:block/copper_cable_arm", "x": 90, "y": 270 } },
+    { "when": { "east": "true" }, "apply": { "model": "industry:block/copper_cable_arm", "x": 90, "y": 90 } }
   ]
 }

@@ -1,10 +1,7 @@
 package com.rizor1x.industry.registry;
 
 import com.rizor1x.industry.Industry;
-import com.rizor1x.industry.menu.BatteryBoxMenu;
-import com.rizor1x.industry.menu.CrusherMenu;
-import com.rizor1x.industry.menu.ElectricFurnaceMenu;
-import com.rizor1x.industry.menu.GeneratorMenu;
+import com.rizor1x.industry.menu.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -28,4 +25,6 @@ public class ModMenus {
     public static final Supplier<MenuType<ElectricFurnaceMenu>> ELECTRIC_FURNACE_MENU = MENUS.register("electric_furnace_menu",
             () -> IMenuTypeExtension.create(ElectricFurnaceMenu::new));
 
+    public static final Supplier<MenuType<SolarPanelMenu>> SOLAR_PANEL_MENU = MENUS.register("solar_panel_menu",
+            () -> net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create(SolarPanelMenu::new));
 }

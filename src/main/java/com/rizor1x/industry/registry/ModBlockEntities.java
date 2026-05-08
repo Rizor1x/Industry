@@ -30,6 +30,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("electric_furnace_be", () ->
                     BlockEntityType.Builder.of(com.rizor1x.industry.block.entity.ElectricFurnaceBlockEntity::new, ModBlocks.ELECTRIC_FURNACE.get()).build(null));
 
+    public static final Supplier<BlockEntityType<com.rizor1x.industry.block.entity.SolarPanelBlockEntity>> SOLAR_PANEL_BE =
+            BLOCK_ENTITIES.register("solar_panel_be", () ->
+                    BlockEntityType.Builder.of(com.rizor1x.industry.block.entity.SolarPanelBlockEntity::new, ModBlocks.BASIC_SOLAR_PANEL.get()).build((com.mojang.datafixers.types.Type<?>) null));
+
     public static final Supplier<BlockEntityType<com.rizor1x.industry.block.entity.CableBlockEntity>> CABLE_BE =
             BLOCK_ENTITIES.register("cable_be", () ->
                     BlockEntityType.Builder.of(com.rizor1x.industry.block.entity.CableBlockEntity::new,

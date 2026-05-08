@@ -1,0 +1,7 @@
+{
+  "parent": "industry:block/cable_arm",
+  "textures": {
+    "cable": "industry:block/uninsulated_copper_cable",
+    "particle": "industry:block/uninsulated_copper_cable"
+  }
+}

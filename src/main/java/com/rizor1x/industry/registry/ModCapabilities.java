@@ -59,5 +59,11 @@ public class ModCapabilities {
                 ModBlockEntities.CABLE_BE.get(),
                 (be, side) -> be.energyStorage
         );
+
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.SOLAR_PANEL_BE.get(),
+                BaseMachineBlockEntity::getEnergyStorage
+        );
     }
 }

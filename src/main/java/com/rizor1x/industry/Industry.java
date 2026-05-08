@@ -1,5 +1,6 @@
 package com.rizor1x.industry;
 
+import com.rizor1x.industry.block.entity.BaseMachineBlockEntity;
 import com.rizor1x.industry.registry.*;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -24,12 +25,16 @@ public class Industry {
 
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
+        ModArmorMaterials.ARMOR_MATERIALS.register(modEventBus);
         ModRecipes.SERIALIZERS.register(modEventBus);
         ModRecipes.TYPES.register(modEventBus);
 
         // Регистрация базовой настройки
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(ModCapabilities::register);
+
+        modEventBus.addListener(com.rizor1x.industry.registry.ModCapabilities::register);
+        modEventBus.addListener(com.rizor1x.industry.network.ModNetworking::register);
+        modEventBus.addListener(com.rizor1x.industry.IndustryClient::registerScreens);
 
         // Конфиг мода (оставляем из генератора)
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -46,7 +51,7 @@ public class Industry {
         event.registerBlockEntity(
                 net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                 com.rizor1x.industry.registry.ModBlockEntities.CRUSHER_BE.get(),
-                (blockEntity, side) -> blockEntity.getItemHandler(side)
+                BaseMachineBlockEntity::getItemHandler
         );
     }
 }

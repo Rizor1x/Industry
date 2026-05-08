@@ -19,6 +19,7 @@
   "item.industry.battery": "Battery",
   "item.industry.basic_drill": "Basic Drill",
   "item.industry.diamond_drill": "Diamond Drill",
+  "item.industry.batpack": "BatPack",
 
   "item.industry.machine_casing": "Machine Casing",
 
@@ -26,6 +27,15 @@
   "block.industry.coal_generator": "Coal Generator",
   "block.industry.electric_furnace": "Electric Furnace",
   "block.industry.battery_box": "Battery Box",
+  "block.industry.basic_solar_panel": "Basic Solar Panel",
 
-  "block.industry.copper_cable": "Copper Cable"
+  "block.industry.uninsulated_tin_cable": "Tin Cable",
+  "block.industry.tin_cable": "Isolated Tin Cable",
+  "block.industry.uninsulated_copper_cable": "Copper Cable",
+  "block.industry.copper_cable": "Isolated Copper Cable",
+  "block.industry.uninsulated_gold_cable": "Gold Cable",
+  "block.industry.gold_cable": "Isolated Gold Cable",
+  "block.industry.uninsulated_hv_cable": "HV Cable",
+  "block.industry.hv_cable": "Isolated HV Cable",
+  "block.industry.glass_fiber_cable": "Glass Fiber Cable"
 }

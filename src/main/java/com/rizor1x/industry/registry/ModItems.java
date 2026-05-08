@@ -1,6 +1,7 @@
 package com.rizor1x.industry.registry;
 
 import com.rizor1x.industry.Industry;
+import com.rizor1x.industry.item.custom.JetpackItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -62,6 +63,34 @@ public class ModItems {
                             .component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0)
                             .component(com.rizor1x.industry.registry.ModDataComponents.AREA_MODE.get(), false),
                     30000, 80, true));
+
+    public static final DeferredItem<Item> BATPACK = ITEMS.register("batpack",
+            () -> new com.rizor1x.industry.item.custom.BatPackItem(
+                    com.rizor1x.industry.registry.ModArmorMaterials.BATPACK_MATERIAL,
+                    60000, 100, // 60 000 Вместимость, 100 передача в тик
+                    new Item.Properties().component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0)));
+
+    // 1. Обычный Джетпак (Слабая тяга: 0.12, Макс скорость вверх: 0.4)
+    public static final DeferredItem<Item> JETPACK = ITEMS.register("jetpack",
+            () -> new com.rizor1x.industry.item.custom.JetpackItem(
+                    com.rizor1x.industry.registry.ModArmorMaterials.JETPACK_MATERIAL,
+                    30000, 10,
+                    0.12D, 0.4D, false, // <--- ИЗМЕНИЛИ ЦИФРЫ ТУТ
+                    new Item.Properties().component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0)));
+
+    // 2. Продвинутый Джетпак (Мощная тяга: 0.18, Макс скорость вверх: 0.7)
+    public static final DeferredItem<Item> ADVANCED_JETPACK = ITEMS.register("advanced_jetpack",
+            () -> new com.rizor1x.industry.item.custom.JetpackItem(
+                    com.rizor1x.industry.registry.ModArmorMaterials.JETPACK_MATERIAL,
+                    300000, 30,
+                    0.18D, 0.7D, false, // <--- ИЗМЕНИЛИ ЦИФРЫ ТУТ
+                    new Item.Properties().component(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get(), 0)));
+
+    // 3. Квантовый нагрудник - 10 млн энергии, КРЕАТИВНЫЙ ПОЛЕТ
+    public static final DeferredItem<Item> QUANTUM_CHESTPLATE = ITEMS.register("quantum_chestplate",
+            () -> new JetpackItem(ModArmorMaterials.BATPACK_MATERIAL, 10000000, 50, 0.0, 0.0, true,
+                    new Item.Properties().component(ModDataComponents.ENERGY.get(), 0)));
+
     // ==========================================
     // ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ
     // ==========================================

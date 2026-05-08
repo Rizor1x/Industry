@@ -59,6 +59,9 @@ public class ModBlocks {
                 }
             });
 
+    public static final DeferredBlock<Block> BASIC_SOLAR_PANEL = registerBlock("basic_solar_panel",
+            () -> new com.rizor1x.industry.block.custom.SolarPanelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK), com.rizor1x.industry.block.custom.SolarTier.BASIC));
+
     // ОЛОВО
     public static final DeferredBlock<Block> UNINSULATED_TIN_CABLE = registerBlock("uninsulated_tin_cable", () -> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).noOcclusion(), CableTier.UNINSULATED_TIN));
     public static final DeferredBlock<Block> TIN_CABLE = registerBlock("tin_cable", () -> new CableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS).noOcclusion(), CableTier.TIN));
