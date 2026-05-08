@@ -1,7 +1,6 @@
 package com.rizor1x.industry.menu;
 
 import com.rizor1x.industry.block.entity.BatteryBoxBlockEntity;
-import com.rizor1x.industry.item.custom.BatteryItem;
 import com.rizor1x.industry.registry.ModBlocks;
 import com.rizor1x.industry.registry.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
@@ -58,26 +57,24 @@ public class BatteryBoxMenu extends BaseMachineMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
-        // Если кликаем по слотам машины (0 или 1) -> выкидываем в инвентарь игрока
-        if (index < 2) {
-            if (!this.moveItemStackTo(sourceStack, 2, this.slots.size(), true)) return ItemStack.EMPTY;
+        if (index < 3) {
+            // Если кликаем в слотах машины -> переносим в инвентарь игрока
+            if (!this.moveItemStackTo(sourceStack, 3, this.slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            // Если кликаем в инвентаре игрока: проверяем, Батарейка ли это?
-            if (sourceStack.getItem() instanceof BatteryItem) {
-                // Пытаемся положить сначала в нижний слот (1), потом в верхний (0)
-                if (!this.moveItemStackTo(sourceStack, 1, 2, false)) {
-                    if (!this.moveItemStackTo(sourceStack, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
+            // Если у предмета ЕСТЬ ЭНЕРГИЯ (Батарея, Бур, Ранец) -> кладем в слот батарейки (1)
+            if (sourceStack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get())) {
+                if (!this.moveItemStackTo(sourceStack, 1, 2, false)) return ItemStack.EMPTY;
             } else {
-                return ItemStack.EMPTY; // Если это не батарейка - просто ничего не делаем
+                // Иначе кладем во Вход (0)
+                if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
             }
         }
 
-        if (sourceStack.getCount() == 0) sourceSlot.set(ItemStack.EMPTY);
-        else sourceSlot.setChanged();
-
+        if (sourceStack.getCount() == 0) {
+            sourceSlot.set(ItemStack.EMPTY);
+        } else {
+            sourceSlot.setChanged();
+        }
         sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
     }

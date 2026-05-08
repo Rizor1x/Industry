@@ -58,23 +58,24 @@ public class GeneratorMenu extends BaseMachineMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
-        // 2 слота в генераторе
-        if (index < 2) {
-            if (!this.moveItemStackTo(sourceStack, 2, this.slots.size(), true)) return ItemStack.EMPTY;
+        if (index < 3) {
+            // Если кликаем в слотах машины -> переносим в инвентарь игрока
+            if (!this.moveItemStackTo(sourceStack, 3, this.slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            // Если это уголь или дерево (то, что горит) -> пихаем в слот топлива (0)
-            if (sourceStack.getBurnTime(net.minecraft.world.item.crafting.RecipeType.SMELTING) > 0) {
-                if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
-            }
-            // Иначе (если это батарейка) -> пихаем в верхний слот (1)
-            else {
+            // Если у предмета ЕСТЬ ЭНЕРГИЯ (Батарея, Бур, Ранец) -> кладем в слот батарейки (1)
+            if (sourceStack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get())) {
                 if (!this.moveItemStackTo(sourceStack, 1, 2, false)) return ItemStack.EMPTY;
+            } else {
+                // Иначе кладем во Вход (0)
+                if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
             }
         }
 
-        if (sourceStack.getCount() == 0) sourceSlot.set(ItemStack.EMPTY);
-        else sourceSlot.setChanged();
-
+        if (sourceStack.getCount() == 0) {
+            sourceSlot.set(ItemStack.EMPTY);
+        } else {
+            sourceSlot.setChanged();
+        }
         sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
     }

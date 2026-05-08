@@ -59,11 +59,14 @@ public class CrusherMenu extends BaseMachineMenu {
         ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (index < 3) {
+            // Если кликаем в слотах машины -> переносим в инвентарь игрока
             if (!this.moveItemStackTo(sourceStack, 3, this.slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            if (sourceStack.getItem() == net.minecraft.world.item.Items.REDSTONE) {
+            // Если у предмета ЕСТЬ ЭНЕРГИЯ (Батарея, Бур, Ранец) -> кладем в слот батарейки (1)
+            if (sourceStack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get())) {
                 if (!this.moveItemStackTo(sourceStack, 1, 2, false)) return ItemStack.EMPTY;
             } else {
+                // Иначе кладем во Вход (0)
                 if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
             }
         }

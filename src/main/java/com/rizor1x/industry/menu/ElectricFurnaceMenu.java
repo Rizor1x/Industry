@@ -11,8 +11,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
@@ -62,24 +60,24 @@ public class ElectricFurnaceMenu extends BaseMachineMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
-        // 3 слота в печке
         if (index < 3) {
+            // Если кликаем в слотах машины -> переносим в инвентарь игрока
             if (!this.moveItemStackTo(sourceStack, 3, this.slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            // Если предмет плавится -> в слот 0
-            assert this.blockEntity.getLevel() != null;
-            if (this.blockEntity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(sourceStack), this.blockEntity.getLevel()).isPresent()) {
-                if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
-            }
-            // В противном случае пытаемся положить в слот 1 (батарея), пока не используется
-            else {
+            // Если у предмета ЕСТЬ ЭНЕРГИЯ (Батарея, Бур, Ранец) -> кладем в слот батарейки (1)
+            if (sourceStack.has(com.rizor1x.industry.registry.ModDataComponents.ENERGY.get())) {
                 if (!this.moveItemStackTo(sourceStack, 1, 2, false)) return ItemStack.EMPTY;
+            } else {
+                // Иначе кладем во Вход (0)
+                if (!this.moveItemStackTo(sourceStack, 0, 1, false)) return ItemStack.EMPTY;
             }
         }
 
-        if (sourceStack.getCount() == 0) sourceSlot.set(ItemStack.EMPTY);
-        else sourceSlot.setChanged();
-
+        if (sourceStack.getCount() == 0) {
+            sourceSlot.set(ItemStack.EMPTY);
+        } else {
+            sourceSlot.setChanged();
+        }
         sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
     }
